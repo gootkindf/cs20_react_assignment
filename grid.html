@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Color Grid</title>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+  <style>
+    body { font-family: Georgia, serif; text-align: center; margin: 2rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 4px;
+      justify-content: center;
+      padding: 8px;
+      background: white;
+    }
+    .block {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      background: var(--bg);
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Objects: number value + hex background color
+    const MyColors = [
+      { value: 7, color: "black" },
+      { value: 8, color: "blue" },
+      { value: 9, color: "red" },
+      { value: 4, color: "gold" },
+      { value: 5, color: "black" },
+      { value: 6, color: "blue" },
+      { value: 1, color: "red" },
+      { value: 2, color: "gold" },
+      { value: 3, color: "black" }
+    ];
+
+    // One block: bgcolor is a prop, the number is the child
+    function Block({ bgcolor, children }) {
+      return (
+        <div
+          className="block"
+          style={{ "--bg": bgcolor }}
+          onClick={() => alert(children)}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    function ColorGrid({ colorArray }) {
+      return (
+        <div className="grid">
+          {colorArray.map((c) => (
+            <Block key={c.value} bgcolor={c.color}>{c.value}</Block>
+          ))}
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <h1>Color Grid</h1>
+          <ColorGrid colorArray={MyColors} />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
